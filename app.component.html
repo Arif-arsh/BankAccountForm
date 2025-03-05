@@ -1,0 +1,151 @@
+
+
+<div class="content" role="main">
+ 
+  <ng-template #myModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Pickup and Deposit Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="pickupForm">
+        <!-- Pickup Details Table (Single Row) -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Pick-Up Details</h5>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>UTR Number</th>
+                      <th>POA Code</th>
+                      <th>Pick-up Date</th>
+                      <th>Pick-up Code</th>
+                      <th>Customer Name</th>
+                      <th>Full Pick-up Address</th>
+                      <th>Deposit Slip Number</th>
+                      <th>Previous Scratch Card Number</th>
+                      <th>Current Scratch Card Number</th>
+                      <th>Total Amount</th>
+                      <th>Route Number</th>
+                      <th>Service Number</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="pickupDetails">
+                    <tr [formGroupName]="0">
+                      <td><input type="text" class="form-control small-input" formControlName="utrNumber" /></td>
+                      <td><input type="text" class="form-control small-input" formControlName="poaCode" /></td>
+                      <td><input type="date" class="form-control small-input" formControlName="pickupDate" /></td>
+                      <td><input type="text" class="form-control small-input" formControlName="pickupPointCode" /></td>
+                      <td><input type="text" class="form-control small-input" formControlName="customerName" /></td>
+                      <td><input type="text" class="form-control small-input" formControlName="fullPickupAddress" /></td>
+                      <td><input type="text" class="form-control small-input" formControlName="depositSlipNumber" /></td>
+                      <td><input type="text" class="form-control small-input" formControlName="PSCardNum" /></td>
+                      <td><input type="text" class="form-control small-input" formControlName="scratchCardNo" /></td>
+                      <td><input type="text" class="form-control small-input" formControlName="totalAmount" /></td>
+                      <td><input type="text" class="form-control small-input" formControlName="routeNumber" /></td>
+                      <td><input type="text" class="form-control small-input" formControlName="serviceNumber" /></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Deposit Details Table (Dynamic Rows) -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Deposit Details</h5>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Deposit Date</th>
+                      <th>Deposit Type</th>
+                      <th>Deposit Amount</th>
+                      <th>Deposit Difference</th>
+                      <th>Deposit Bank</th>
+                      <th>Deposit Location</th>
+                      <th>Account Number</th>
+                      <th>Transaction Number</th>
+                      <th>Remarks</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="depositDetails">
+                    <tr *ngFor="let depositDetail of depositDetails.controls; let i = index" [formGroupName]="i">
+                      <td><input type="date" class="form-control small-input" formControlName="depositDate" /></td>
+                      <td>
+                        <select class="form-control small-input" formControlName="depositType">
+                          <option value="" disabled selected>Select Deposit Type</option>
+                          <option value="burial">Burial</option>
+                          <option value="customer account">Customer Account</option>
+                        </select>
+                      </td>
+                      <td><input class="form-control small-input" formControlName="DepositAmount" /></td>
+                      <td><input class="form-control small-input" formControlName="DepositDifference" /></td>
+                      <td>
+                        <select class="form-control small-input" formControlName="depositBank1">
+                          <option value="" disabled selected>Select Deposit Bank</option>
+                          <option value="cash">Cash</option>
+                          <option value="cheque">Cheque</option>
+                          <option value="online">Online Transfer</option>
+                          <option value="upi">UPI</option>
+                        </select>
+                      </td>
+                      <td>
+                        <select class="form-control small-input" formControlName="DepositLocation">
+                          <option value="" disabled selected>Select Deposit Location</option>
+                          <option value="cash">Cash</option>
+                          <option value="cheque">Cheque</option>
+                          <option value="online">Online Transfer</option>
+                          <option value="upi">UPI</option>
+                        </select>
+                      </td>
+                      <td>
+                        <select class="form-control small-input" formControlName="AccountNumber">
+                          <option value="" disabled selected>Select Account Number</option>
+                          <option value="cash">Cash</option>
+                          <option value="cheque">Cheque</option>
+                          <option value="online">Online Transfer</option>
+                          <option value="upi">UPI</option>
+                        </select>
+                      </td>
+                      <td><input class="form-control small-input" formControlName="TransactionNumber" /></td>
+                      <td><input class="form-control small-input" formControlName="Remarks" /></td>
+                      <td>
+                        <select class="form-control small-input" formControlName="Status">
+                          <option value="" disabled selected>Select Status</option>
+                          <option value="Verified">Verified</option>
+                          <option value="Pending">Pending</option>
+                          <option value="In Process">In Process</option>
+                        </select>
+                      </td>
+                      <td><button type="button" class="btn btn-sm btn-success" (click)="addDepositDetail()">Add</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="saveData()">Save</button>
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">Close</button>
+    </div>
+  </ng-template>
+  <a routerLink="/pickup-detail">goto Details</a>
+  <a (click)="openModal(myModal)">View Details</a>
+  <h2>Resources</h2>
+  <button type="button" class="btn btn-primary">Primary</button>
+<router-outlet></router-outlet>
